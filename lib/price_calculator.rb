@@ -1,6 +1,5 @@
-require "price_calculator/version"
+require "price_calculator/cli"
 
 module PriceCalculator
   class Error < StandardError; end
-  # Your code goes here...
 end

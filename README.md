@@ -22,7 +22,10 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+  price_calculator milk,bread,banana --inventory_path=./data/inventory.json
+```
+
 
 ## Development
 
