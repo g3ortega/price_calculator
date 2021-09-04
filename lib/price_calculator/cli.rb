@@ -1,11 +1,11 @@
 require 'thor'
 require 'json'
-require 'price_calculator/utils'
+require 'price_calculator/order_processor'
+require 'price_calculator/services/build_inventory'
+require 'price_calculator/services/build_product_list'
 
 module PriceCalculator
   class CLI < Thor
-    include PriceCalculator::Utils
-
     desc 'order PRODUCTS', 'This will return the price of products provided'
     long_desc <<-ORDER
     `order PRODUCTS` will calculate the price for a list of comma separated products.
@@ -15,49 +15,36 @@ module PriceCalculator
 
     option :inventory_file_path
 
-    def order(products)
-      inventory_file_path = ENV['INVENTORY_PATH'] || options[:inventory_file_path]
+    def order
+      products = ask('Please enter all the items purchased separated by a comma:')
+      inventory_file_path = ENV['INVENTORY_FILE_PATH'] || options[:inventory_file_path]
 
+      return unless valid_file_path?(inventory_file_path)
+
+      inventory = PriceCalculator::Services::BuildInventory.new(inventory_file_path).call
+      product_list = PriceCalculator::Services::BuildProductList.new(products).call
+
+      PriceCalculator::OrderProcessor.new(inventory: inventory, product_list: product_list).print_price_table
+    rescue PriceCalculator::Error => e
+      say "Error: #{e}"
+    end
+
+    private
+
+    def valid_file_path?(inventory_file_path)
       # Validates presence
       if inventory_file_path.nil?
-        say 'You need to provide an INVENTORY file'
-        return
+        say 'Error: You need to provide an INVENTORY file'
+        return false
       end
 
       # Validates existence
       unless File.exist?(inventory_file_path)
-        say 'Invalid path'
-        return
+        say 'Error: Invalid path'
+        false
       end
 
-      # Validates content
-      file = File.read(inventory_file_path)
-      parsed_data = JSON.parse(file)
-
-      # Validates input
-      product_names = normalize_input(products)
-
-      # Build Product Order
-
-
-
-      # p product_names
-
-
-      # Render order receipt
-      say <<~EOS
-      Item     Quantity      Price
-      --------------------------------------
-      Milk      3            $8.97
-      Bread     4            $8.17
-      Apple     1            $0.89
-      Banana    1            $0.99
-
-      Total price : $19.02
-      You saved $3.45 today.
-    EOS
-    rescue PriceCalculator::Error => e
-      say "Error: #{e}"
+      true
     end
   end
 end

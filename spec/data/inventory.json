@@ -2,7 +2,7 @@
   {
     "name": "Milk",
     "unit_price": 3.97,
-    "discounts": {
+    "discount": {
       "quantity": 2,
       "price": 5.0
     }
@@ -10,7 +10,7 @@
   {
     "name": "Bread",
     "unit_price": 2.17,
-    "discounts": {
+    "discount": {
       "quantity": 3,
       "price": 6.0
     }

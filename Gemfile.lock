@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     price_calculator (0.1.0)
+      text-table
       thor
 
 GEM
@@ -27,6 +28,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.2)
+    text-table (1.2.4)
     thor (1.1.0)
 
 PLATFORMS

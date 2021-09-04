@@ -22,8 +22,17 @@ Or install it yourself as:
 
 ## Usage
 
+To install it locally.
+
 ```
-  price_calculator milk,bread,banana --inventory_path=./data/inventory.json
+  rake build
+  rake install
+```
+
+To load inventory you can provide the file path through an environment variable `INVENTORY_FILE_PATH` or providing the path using the `inventory_file_path` flag.
+
+```
+  price_calculator milk,bread,banana --inventory_file_path=./data/inventory.json
 ```
 
 
