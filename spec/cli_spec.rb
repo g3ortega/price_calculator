@@ -16,7 +16,7 @@ RSpec.describe PriceCalculator::CLI do
 
   describe '#order' do
     before do
-      @shell.options = { inventory_file_path: './data/inventory.json' }
+      @shell.options = { inventory_file_path: 'spec/data/valid_inventory_file.json' }
     end
 
     context 'right input' do

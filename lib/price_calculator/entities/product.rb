@@ -1,24 +1,30 @@
-class Product
-  attr_reader :name, :unit_price, :discount
+require 'bigdecimal'
 
-  def initialize(name:, unit_price:, discount: nil)
-    @name = name
-    @unit_price = unit_price
-    @discount = discount
-  end
+module PriceCalculator
+  module Entities
+    class Product
+      attr_reader :name, :unit_price, :discount
 
-  def calculate_total(quantity)
-    total = quantity * unit_price
+      def initialize(name:, unit_price:, discount: nil)
+        @name = name
+        @unit_price = BigDecimal(unit_price, 8)
+        @discount = discount
+      end
 
-    discount = if @discount && quantity >= @discount.quantity
-                 not_discounted = quantity % @discount.quantity
-                 discounted = (quantity - not_discounted) / @discount.quantity
+      def calculate_total(quantity)
+        total = quantity * unit_price
 
-                 total - (discounted * @discount.price + not_discounted * @unit_price)
-               else
-                 0
-               end
+        discount = if @discount && quantity >= @discount.quantity
+                     not_discounted = quantity % @discount.quantity
+                     discounted = (quantity - not_discounted) / @discount.quantity
 
-    { total: quantity * unit_price, discount: discount }
+                     total - (discounted * @discount.price + not_discounted * @unit_price)
+                   else
+                     0
+                   end
+
+        { total: quantity * unit_price, discount: discount }
+      end
+    end
   end
 end

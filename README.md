@@ -29,12 +29,37 @@ To install it locally.
   rake install
 ```
 
+To run without install it. From project root path execute
+
+```
+  bundle exec exe/price_calculator order --inventory_file_path=./data/inventory.json
+```
+
+
 To load inventory you can provide the file path through an environment variable `INVENTORY_FILE_PATH` or providing the path using the `inventory_file_path` flag.
 
 ```
-  price_calculator milk,bread,banana --inventory_file_path=./data/inventory.json
+  price_calculator order --inventory_file_path=./data/inventory.json
+
+  Please enter all the items purchased separated by a comma: milk,milk,milk
+  +------+----------+-------+
+  | Item | Quantity | Price |
+  +------+----------+-------+
+  | Milk | 3        | $8.97 |
+  +------+----------+-------+
+  Total price: $8.97
+  You saved: $2.94 today
 ```
 
+## TODO
+- [X] Use/enforce BigDecimal for prices
+- [ ] Add command to CLI that shows the current pricing table based on inventory
+- [ ] Enforce types for entities (maybe using dry-types?)
+- [ ] Improve coverage
+- [ ] Improve documentation
+- [ ] Validate attributes/data from inventory JSON file
+- [ ] Manage order status?
+- [ ] Persist/Update existence of products?
 
 ## Development
 

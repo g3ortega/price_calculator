@@ -15,15 +15,15 @@ module PriceCalculator
       create_order_items
 
       table = Text::Table.new
-      table.head = ['Item', 'Quantity', 'Price']
+      table.head = %w[Item Quantity Price]
 
       @order_items.each do |order_item|
-        table.rows << [order_item.product.name, order_item.quantity, "$#{order_item.total_to_pay}"]
+        table.rows << [order_item.product.name, order_item.quantity, "$#{order_item.total_to_pay.to_f}"]
       end
 
       puts table.to_s
-      puts "Total price: $#{@order_items.map(&:total_to_pay).inject(0, &:+).round(2)}"
-      puts "You saved: $#{@order_items.map(&:discount).inject(0, &:+).round(2)} today"
+      puts "Total price: $#{@order_items.map(&:total_to_pay).inject(0, &:+).round(2).to_f}"
+      puts "You saved: $#{@order_items.map(&:discount).inject(0, &:+).round(2).to_f} today"
       puts "Some items are not available at this moment: #{@invalid_items}" if @invalid_items.any?
     end
 
@@ -34,7 +34,7 @@ module PriceCalculator
         inventory_product = @inventory.find { |product| product.name.downcase == product_name.downcase }
 
         if inventory_product
-          @order_items << OrderItem.new(inventory_product, quantity)
+          @order_items << Entities::OrderItem.new(inventory_product, quantity)
         else
           @invalid_items << product_name
         end

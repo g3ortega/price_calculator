@@ -1,4 +1,4 @@
-require "price_calculator/cli"
+require 'price_calculator/cli'
 
 module PriceCalculator
   class Error < StandardError; end

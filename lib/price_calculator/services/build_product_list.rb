@@ -17,7 +17,7 @@ module PriceCalculator
       end
 
       def validate_input
-        raise Error.new('Product list is empty') if @input.nil? || @input.empty?
+        raise Error, 'Product list is empty' if @input.nil? || @input.empty?
       end
     end
   end

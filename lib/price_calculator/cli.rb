@@ -16,15 +16,16 @@ module PriceCalculator
     option :inventory_file_path
 
     def order
-      products = ask('Please enter all the items purchased separated by a comma:')
       inventory_file_path = ENV['INVENTORY_FILE_PATH'] || options[:inventory_file_path]
 
       return unless valid_file_path?(inventory_file_path)
 
-      inventory = PriceCalculator::Services::BuildInventory.new(inventory_file_path).call
-      product_list = PriceCalculator::Services::BuildProductList.new(products).call
+      products = ask('Please enter all the items purchased separated by a comma:')
 
-      PriceCalculator::OrderProcessor.new(inventory: inventory, product_list: product_list).print_price_table
+      inventory = Services::BuildInventory.new(inventory_file_path).call
+      product_list = Services::BuildProductList.new(products).call
+
+      OrderProcessor.new(inventory: inventory, product_list: product_list).print_price_table
     rescue PriceCalculator::Error => e
       say "Error: #{e}"
     end

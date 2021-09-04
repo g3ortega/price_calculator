@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Milk",
+    "unit_price": 3.97,
+    "discount": {
+      "quantity": 2,
+      "price": "15.0"
+    }
+  },
+  {
+    "name": "Bread",
+    "unit_price": 2.17,
+    "discount": {
+      "quantity": 3,
+      "price": "20.0"
+    }
+  },
+  {
+    "name": "Orange",
+    "unit_price": 0.99
+  }
+]

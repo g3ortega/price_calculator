@@ -1,4 +1,5 @@
 require 'json'
+require 'bigdecimal'
 require 'price_calculator/entities/product'
 require 'price_calculator/entities/discount'
 
@@ -19,11 +20,9 @@ module PriceCalculator
         products = []
 
         parsed_inventory.each do |item|
-          if item['discount']
-            discount = Discount.new(quantity: item.dig('discount', 'quantity'), price: item.dig('discount', 'price'))
-          end
-
-          products << Product.new(name: item['name'], unit_price: item['unit_price'], discount: discount)
+          products << Entities::Product.new(name: item['name'],
+                                            unit_price: item['unit_price'],
+                                            discount: build_discount(item))
         end
 
         products
@@ -32,12 +31,20 @@ module PriceCalculator
       def parsed_inventory
         file = File.read(@inventory_file_path)
         JSON.parse(file)
-      rescue => e
-        raise PriceCalculator::Error.new("Inventory parsing failed. Please try with another inventory file. Details: #{e}")
+      rescue StandardError => e
+        raise PriceCalculator::Error, 'Inventory parsing failed. Please try with another inventory file.'
       end
 
-      def validates_data
-        # TODO: Validates that total from discount is not higher than unit price * quantity
+      def build_discount(item)
+        return unless item['discount']
+
+        quantity = item.dig('discount', 'quantity')
+        discount_price = BigDecimal(item.dig('discount', 'price'), 8)
+        unit_price = BigDecimal(item['unit_price'], 8)
+
+        raise Error, 'Invalid Discount Found' if discount_price > (quantity * unit_price)
+
+        Entities::Discount.new(quantity: quantity, price: discount_price)
       end
     end
   end
