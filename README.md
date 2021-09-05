@@ -53,10 +53,10 @@ To load inventory you can provide the file path through an environment variable 
   You saved: $2.94 today
 ```
 
-## TODO
+## TODO MVP
 - [X] Use/enforce BigDecimal for prices
 - [ ] Add command to CLI that shows the current pricing table based on inventory
-- [ ] Enforce types for entities (maybe using dry-types?)
+- [X] Enforcing type checking using dry-types. Impact> [POROs vs dry-type + dry-struct comparison](profiling/poros-vs-dry-type-structs.md.md)
 - [ ] Improve coverage
 - [ ] Improve documentation
 - [ ] Validate attributes/data from inventory JSON file

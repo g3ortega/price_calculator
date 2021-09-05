@@ -1,14 +1,11 @@
-require 'bigdecimal'
+require 'price_calculator/entities/types'
 
 module PriceCalculator
   module Entities
-    class Discount
-      attr_reader :quantity, :price
-
-      def initialize(quantity:, price:)
-        @quantity = quantity
-        @price = BigDecimal(price, 8)
-      end
+    class Discount < ::Dry::Struct
+      attribute :quantity, Types::Strict::Integer
+      attribute :price, Types::Coercible::Decimal
     end
   end
 end
+

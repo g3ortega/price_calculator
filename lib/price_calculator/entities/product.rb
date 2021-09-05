@@ -1,29 +1,26 @@
-require 'bigdecimal'
+require 'price_calculator/entities/types'
+require 'price_calculator/entities/discount'
 
 module PriceCalculator
   module Entities
-    class Product
-      attr_reader :name, :unit_price, :discount
-
-      def initialize(name:, unit_price:, discount: nil)
-        @name = name
-        @unit_price = BigDecimal(unit_price, 8)
-        @discount = discount
-      end
+    class Product < ::Dry::Struct
+      attribute :name, Types::Strict::String
+      attribute :unit_price, Types::Coercible::Decimal
+      attribute :discount, Discount | Types::Nil
 
       def calculate_total(quantity)
         total = quantity * unit_price
 
-        discount = if @discount && quantity >= @discount.quantity
-                     not_discounted = quantity % @discount.quantity
-                     discounted = (quantity - not_discounted) / @discount.quantity
+        total_discounted = if discount && quantity >= discount.quantity
+                             not_discounted = quantity % discount.quantity
+                             discounted = (quantity - not_discounted) / discount.quantity
 
-                     total - (discounted * @discount.price + not_discounted * @unit_price)
-                   else
-                     0
-                   end
+                             total - (discounted * discount.price + not_discounted * unit_price)
+                           else
+                             0
+                           end
 
-        { total: quantity * unit_price, discount: discount }
+        { total: quantity * unit_price, discount: total_discounted }
       end
     end
   end

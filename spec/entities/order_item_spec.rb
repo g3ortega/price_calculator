@@ -8,23 +8,55 @@ RSpec.describe PriceCalculator::Entities::OrderItem do
     end
 
     it 'initialize OrderItem including price details for product' do
-      order_item = described_class.new(@product, 5)
+      order_item = described_class.new(product: @product, quantity: 5)
       expect(order_item.product).to eq(@product)
       expect(order_item.quantity).to eq(5)
-      expect(order_item.total_to_pay.to_f).to eq(7.99)
+      expect(order_item.price_details[:total].to_f).to eq(7.99)
     end
   end
 
   describe 'initialization without discounted product' do
     before do
-      @product = PriceCalculator::Entities::Product.new(name: 'Milk', unit_price: '1.99')
+      @product = PriceCalculator::Entities::Product.new(name: 'Milk', unit_price: '1.99', discount: nil)
     end
 
     it 'initialize OrderItem including price details for product' do
-      order_item = described_class.new(@product, 5)
+      order_item = described_class.new(product: @product, quantity: 5)
       expect(order_item.product).to eq(@product)
       expect(order_item.quantity).to eq(5)
-      expect(order_item.total_to_pay.to_f).to eq(9.95)
+      expect(order_item.price_details[:total].to_f).to eq(9.95)
+    end
+  end
+
+  describe 'type validation' do
+    before do
+      @product = PriceCalculator::Entities::Product.new(name: 'Milk', unit_price: '1.99', discount: nil)
+    end
+
+    describe 'quantity' do
+      it 'raise exception when wrong type is provided' do
+        expect do
+          described_class.new(quantity: 'nope', product: @product)
+        end.to raise_error(Dry::Struct::Error, /has invalid type for :quantity/)
+      end
+
+      it 'allows building discount' do
+        order_item = described_class.new(quantity: 5, product: @product)
+        expect(order_item.quantity).to eq(5)
+      end
+    end
+
+    describe 'product' do
+      it 'raise exception when wrong type is provided' do
+        expect do
+          described_class.new(quantity: 1, product: 'nope')
+        end.to raise_error(Dry::Struct::Error)
+      end
+
+      it 'allows building order_item' do
+        order_item = described_class.new(quantity: 5, product: @product)
+        expect(order_item.product).to eq(@product)
+      end
     end
   end
 end

@@ -19,7 +19,7 @@ module PriceCalculator
     end
 
     def total_to_pay
-      calculate_total(:total_to_pay)
+      calculate_total(:total)
     end
 
     def total_discount
@@ -32,7 +32,8 @@ module PriceCalculator
       table.head = %w[Item Quantity Price]
 
       @order_items.each do |order_item|
-        table.rows << [order_item.product.name, order_item.quantity, "$#{order_item.total_to_pay.to_f}"]
+        order_price_details = order_item.price_details
+        table.rows << [order_item.product.name, order_item.quantity, "$#{order_price_details[:total].to_s('F')}"]
       end
 
       output << table.to_s
@@ -49,7 +50,7 @@ module PriceCalculator
         inventory_product = @inventory.find { |product| product.name.downcase == product_name.downcase }
 
         if inventory_product
-          @order_items << Entities::OrderItem.new(inventory_product, quantity)
+          @order_items << Entities::OrderItem.new(product: inventory_product, quantity: quantity)
         else
           @invalid_items << product_name
         end
@@ -61,7 +62,9 @@ module PriceCalculator
     end
 
     def calculate_total(attribute)
-      @order_items.map { |order_item| order_item.send(attribute) }.inject(BigDecimal(0), &:+).round(2)
+      @order_items.collect do |order_item|
+        order_item.price_details[attribute]
+      end.inject(BigDecimal(0, 8), &:+).round(2)
     end
 
     def product_list_to_hash

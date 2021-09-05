@@ -39,9 +39,9 @@ module PriceCalculator
       def build_discount(item)
         return unless item['discount']
 
-        discount_quantity = item.dig('discount', 'quantity')
-        discount_price = BigDecimal(item.dig('discount', 'price'), 8)
-        unit_price = BigDecimal(item['unit_price'], 8)
+        discount_quantity = item.dig('discount', 'quantity').to_i
+        discount_price = item.dig('discount', 'price').to_d
+        unit_price = (item['unit_price']).to_d
 
         raise Error, 'Invalid Discount Found' if discount_price > (discount_quantity * unit_price)
 
