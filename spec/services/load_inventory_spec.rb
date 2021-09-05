@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe PriceCalculator::Services::BuildInventory do
+RSpec.describe PriceCalculator::Services::LoadInventory do
   describe '#call' do
     context 'valid JSON file' do
       subject { described_class.new('spec/data/valid_inventory_file.json') }
