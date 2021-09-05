@@ -92,7 +92,7 @@ price_calculator pricing_table --inventory_file_path=./data/inventory.json
 ## TODO MVP
 - [X] Use/enforce BigDecimal for prices
 - [X] Add command to CLI that shows the current pricing table based on inventory
-- [X] Enforcing type checking using dry-types. Impact> [POROs vs dry-type + dry-struct comparison](profiling/poros-vs-dry-type-structs.md.md)
+- [X] Enforcing type checking using dry-types. Impact> [POROs vs dry-type + dry-struct comparison](profiling/poros-vs-dry-type-structs.md)
 - [ ] Revisit naming
 - [ ] Improve coverage
 - [ ] Improve documentation
