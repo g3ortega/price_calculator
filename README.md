@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/g3ortega/foursquare_next.svg?branch=main)](https://app.travis-ci.com/g3ortega/foursquare_next)
+
 # PriceCalculator
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/price_calculator`. To experiment with that code, run `bin/console` for an interactive prompt.
