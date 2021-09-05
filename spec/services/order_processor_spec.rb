@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe PriceCalculator::OrderProcessor do
+RSpec.describe PriceCalculator::Services::OrderProcessor do
   describe '#print_price_table' do
     before do
       @old_stderr = $stderr
@@ -17,7 +17,7 @@ RSpec.describe PriceCalculator::OrderProcessor do
     let(:inventory) { PriceCalculator::Services::LoadInventory.new('spec/data/valid_inventory_file.json').call }
 
     context 'with all products available in inventory' do
-      let(:product_list) { PriceCalculator::Services::BuildProductList.new('milk,milk,bread,bread').call }
+      let(:product_list) { PriceCalculator::Services::InputProcessor.new('milk,milk,bread,bread').call }
       subject { described_class.new(inventory: inventory, product_list: product_list) }
 
       it 'returns a print table' do
@@ -37,7 +37,7 @@ RSpec.describe PriceCalculator::OrderProcessor do
     end
 
     context 'with some products not available in inventory' do
-      let(:product_list) { PriceCalculator::Services::BuildProductList.new('milk,bread,bread,nope,etc').call }
+      let(:product_list) { PriceCalculator::Services::InputProcessor.new('milk,bread,bread,nope,etc').call }
       subject { described_class.new(inventory: inventory, product_list: product_list) }
 
       it 'returns a print table' do

@@ -1,6 +1,6 @@
 module PriceCalculator
   module Services
-    class BuildProductList
+    class InputProcessor
       def initialize(input)
         @input = input
       end

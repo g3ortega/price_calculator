@@ -13,7 +13,7 @@ module PriceCalculator
         total = ordered_quantity * unit_price
         total_discount = discounted_price(total, ordered_quantity)
 
-        { total: total, discount: total_discount }
+        { list_price: total, discount: total_discount }
       end
 
       private

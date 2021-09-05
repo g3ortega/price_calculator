@@ -14,7 +14,7 @@ RSpec.describe PriceCalculator::Entities::Product do
       it 'returns the right total' do
         total_detail = subject.pricing(5)
 
-        expect(total_detail).to eq({ total: 7.5, discount: 0 })
+        expect(total_detail).to eq({ list_price: 7.5, discount: 0 })
       end
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe PriceCalculator::Entities::Product do
       it 'returns the right total' do
         total_detail = subject.pricing(5)
 
-        expect(total_detail).to eq({ total: 7.5, discount: 4.0 })
+        expect(total_detail).to eq({ list_price: 7.5, discount: 4.0 })
       end
     end
   end
