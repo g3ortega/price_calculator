@@ -9,11 +9,11 @@ RSpec.describe PriceCalculator::Entities::Order do
     context 'adding duplicated products' do
       it 'raise an error when duplicated product is added' do
         order_item = PriceCalculator::Entities::OrderItem.new(product: inventory.first, quantity: 5,
-                                                              price: BigDecimal(10), discount: BigDecimal(0))
+                                                              net_price: BigDecimal(10), discount: BigDecimal(0))
 
         order_item_with_same_product = PriceCalculator::Entities::OrderItem.new(product: inventory.first,
                                                                                 quantity: 3,
-                                                                                price: BigDecimal(10),
+                                                                                net_price: BigDecimal(10),
                                                                                 discount: BigDecimal(0))
 
         subject.push_order_item(order_item)
@@ -36,17 +36,17 @@ RSpec.describe PriceCalculator::Entities::Order do
     context 'adding valid order items' do
       it 'adds valid order items and calculates the right totals' do
         subject.push_order_item PriceCalculator::Entities::OrderItem.new(product: inventory[0], quantity: 5,
-                                                                         price: BigDecimal(10), discount: BigDecimal(0))
+                                                                         net_price: BigDecimal(10), discount: BigDecimal(0))
 
         subject.push_order_item PriceCalculator::Entities::OrderItem.new(product: inventory[1], quantity: 5,
-                                                                         price: BigDecimal(5), discount: BigDecimal(3))
+                                                                         net_price: BigDecimal(5), discount: BigDecimal(3))
 
         expect(subject.order_items.count).to eq(2)
         expect(subject.total_to_pay).to eq(15.0)
         expect(subject.total_discounted).to eq(3.0)
 
         subject.push_order_item PriceCalculator::Entities::OrderItem.new(product: inventory[2], quantity: 5,
-                                                                         price: BigDecimal(10), discount: BigDecimal(5))
+                                                                         net_price: BigDecimal(10), discount: BigDecimal(5))
 
         expect(subject.order_items.count).to eq(3)
         expect(subject.total_to_pay).to eq(25.0)

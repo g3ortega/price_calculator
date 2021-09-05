@@ -20,7 +20,7 @@ module PriceCalculator
       end
 
       def total_to_pay
-        @total_to_pay ||= sum_collection_by(:price)
+        @total_to_pay ||= sum_collection_by(:net_price)
       end
 
       def total_discounted
@@ -33,7 +33,7 @@ module PriceCalculator
         table.head = %w[Item Quantity Price]
 
         order_items.each do |order_item|
-          table.rows << [order_item.product.name, order_item.quantity, "$#{format_decimal(order_item.price)}"]
+          table.rows << [order_item.product.name, order_item.quantity, "$#{format_decimal(order_item.net_price)}"]
         end
 
         output << table.to_s

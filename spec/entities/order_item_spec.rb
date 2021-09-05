@@ -8,10 +8,11 @@ RSpec.describe PriceCalculator::Entities::OrderItem do
     end
 
     it 'initialize OrderItem including price details for product' do
-      order_item = described_class.new(product: @product, quantity: 5, price: BigDecimal('3.99'), discount: BigDecimal('0'))
+      order_item = described_class.new(product: @product, quantity: 5, net_price: BigDecimal('3.99'),
+                                       discount: BigDecimal('0'))
       expect(order_item.product).to eq(@product)
       expect(order_item.quantity).to eq(5)
-      expect(order_item.price).to eq(3.99)
+      expect(order_item.net_price).to eq(3.99)
     end
   end
 
@@ -21,10 +22,11 @@ RSpec.describe PriceCalculator::Entities::OrderItem do
     end
 
     it 'initialize OrderItem including price details for product' do
-      order_item = described_class.new(product: @product, quantity: 5, price: BigDecimal('3.99'), discount: BigDecimal('0'))
+      order_item = described_class.new(product: @product, quantity: 5, net_price: BigDecimal('3.99'),
+                                       discount: BigDecimal('0'))
       expect(order_item.product).to eq(@product)
       expect(order_item.quantity).to eq(5)
-      expect(order_item.price).to eq(3.99)
+      expect(order_item.net_price).to eq(3.99)
     end
   end
 
@@ -41,7 +43,8 @@ RSpec.describe PriceCalculator::Entities::OrderItem do
       end
 
       it 'allows building discount' do
-        order_item = described_class.new(quantity: 5, product: @product, price: BigDecimal('2.99'), discount: BigDecimal(0))
+        order_item = described_class.new(quantity: 5, product: @product, net_price: BigDecimal('2.99'),
+                                         discount: BigDecimal(0))
         expect(order_item.quantity).to eq(5)
       end
     end
@@ -54,7 +57,8 @@ RSpec.describe PriceCalculator::Entities::OrderItem do
       end
 
       it 'allows building order_item' do
-        order_item = described_class.new(quantity: 5, product: @product, price: BigDecimal('2.99'), discount: BigDecimal('1.99'))
+        order_item = described_class.new(quantity: 5, product: @product, net_price: BigDecimal('2.99'),
+                                         discount: BigDecimal('1.99'))
         expect(order_item.product).to eq(@product)
       end
     end

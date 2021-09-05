@@ -6,7 +6,7 @@ module PriceCalculator
     class OrderItem < ::Dry::Struct
       attribute :product, Product
       attribute :quantity, Types::Strict::Integer
-      attribute :price, Types::Strict::Decimal
+      attribute :net_price, Types::Strict::Decimal
       attribute :discount, Types::Strict::Decimal
     end
   end

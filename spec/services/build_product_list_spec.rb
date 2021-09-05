@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe PriceCalculator::Services::BuildProductList do
+RSpec.describe PriceCalculator::Services::InputProcessor do
   context 'with valid input' do
     subject { described_class.new('milk,milk') }
 
