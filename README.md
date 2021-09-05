@@ -93,9 +93,10 @@ price_calculator pricing_table --inventory_file_path=./data/inventory.json
 - [X] Use/enforce BigDecimal for prices
 - [X] Add command to CLI that shows the current pricing table based on inventory
 - [X] Enforcing type checking using dry-types. Impact> [POROs vs dry-type + dry-struct comparison](profiling/poros-vs-dry-type-structs.md)
-- [ ] Revisit naming
+- [X] Revisit naming (refactoring to make more sense to classes responsibility & structure)
 - [ ] Improve coverage
 - [ ] Improve documentation
+- [ ] Add utility module and extract some methods
 - [ ] Validate attributes/data from inventory JSON file
 - [ ] Manage order status?
 - [ ] Persist/Update existence of products?
