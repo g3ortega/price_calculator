@@ -10,9 +10,9 @@ RSpec.describe PriceCalculator::Entities::Product do
       expect(subject.discount).to be_nil
     end
 
-    describe '#calculate_total' do
+    describe '#pricing' do
       it 'returns the right total' do
-        total_detail = subject.calculate_total(5)
+        total_detail = subject.pricing(5)
 
         expect(total_detail).to eq({ total: 7.5, discount: 0 })
       end
@@ -34,9 +34,9 @@ RSpec.describe PriceCalculator::Entities::Product do
       expect(subject.discount).to eq(discount)
     end
 
-    describe '#calculate_total' do
+    describe '#pricing' do
       it 'returns the right total' do
-        total_detail = subject.calculate_total(5)
+        total_detail = subject.pricing(5)
 
         expect(total_detail).to eq({ total: 7.5, discount: 4.0 })
       end

@@ -21,7 +21,7 @@ RSpec.describe PriceCalculator::OrderProcessor do
       subject { described_class.new(inventory: inventory, product_list: product_list) }
 
       it 'returns a print table' do
-        subject.call
+        subject.perform
 
         expect(subject.to_s).to eq <<~PRICINGTABLE
           +-------+----------+-------+
@@ -41,7 +41,7 @@ RSpec.describe PriceCalculator::OrderProcessor do
       subject { described_class.new(inventory: inventory, product_list: product_list) }
 
       it 'returns a print table' do
-        subject.call
+        subject.perform
 
         expect(subject.to_s).to eq <<~PRICINGTABLE
           +-------+----------+-------+

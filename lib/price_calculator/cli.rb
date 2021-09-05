@@ -22,21 +22,14 @@ module PriceCalculator
       products = ask('Please enter all the items purchased separated by a comma:')
 
       product_list = Services::BuildProductList.new(products).call
+      order_processor = OrderProcessor.new(inventory: inventory, product_list: product_list).perform
 
-      order_processor = OrderProcessor.new(inventory: inventory, product_list: product_list)
-      order_processor.call
       puts order_processor.to_s
     rescue PriceCalculator::Error => e
       say "Error: #{e}"
     end
 
     desc 'pricing_table', 'Print pricing table from inventory_file'
-    long_desc <<-ORDER
-    `order PRODUCTS` will calculate the price for a list of comma separated products.
-    You can also pass the an `inventory_path` which consists of a JSON file with the
-    products and discounts.
-    ORDER
-
     option :inventory_file_path
 
     def pricing_table

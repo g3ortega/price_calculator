@@ -6,17 +6,8 @@ module PriceCalculator
     class OrderItem < ::Dry::Struct
       attribute :product, Product
       attribute :quantity, Types::Strict::Integer
-
-      def price_details
-        { total: product_price_detail[:total] - product_price_detail[:discount],
-          discount: product_price_detail[:discount] }
-      end
-
-      private
-
-      def product_price_detail
-        @product_price_detail ||= product.calculate_total(quantity)
-      end
+      attribute :price, Types::Strict::Decimal
+      attribute :discount, Types::Strict::Decimal
     end
   end
 end
