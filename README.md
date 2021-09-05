@@ -2,9 +2,27 @@
 
 # PriceCalculator
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/price_calculator`. To experiment with that code, run `bin/console` for an interactive prompt.
+Price Calculator is a CLI App to calculate prices for an inventory of products provided via a JSON file, eg:
 
-TODO: Delete this and the text above, and describe your gem
+```json
+[
+  {
+    "name": "Bread",
+    "unit_price": "2.17",
+    "discount": {
+      "quantity": 3,
+      "price": "6.0"
+    }
+  },
+  {
+    "name": "Banana",
+    "unit_price": "0.99"
+  }
+]
+```
+
+You can even provide a discount, and we're going to calculate everything for you from your awesome terminal 🚀
+
 
 ## Installation
 
@@ -22,7 +40,7 @@ Or install it yourself as:
 
     $ gem install price_calculator
 
-## Usage
+### OR
 
 To install it locally.
 
@@ -31,14 +49,32 @@ To install it locally.
   rake install
 ```
 
-To run without install it. From project root path execute
+## Usage
+
+You need to provide an `inventory_file_path`, you can provide it using the flag `--inventory_file=path_to_inventory.json` or using an environment variable `INVENTORY_FILE_PATH`
+
+To run it without install it. From project root path execute:
 
 ```
   bundle exec exe/price_calculator order --inventory_file_path=./data/inventory.json
 ```
 
+### Print current inventory
 
-To load inventory you can provide the file path through an environment variable `INVENTORY_FILE_PATH` or providing the path using the `inventory_file_path` flag.
+```
+price_calculator pricing_table --inventory_file_path=./data/inventory.json
+
++--------+------------+------------+
+|  Item  | Unit Price | Sale Price |
++--------+------------+------------+
+| Milk   | $3.97      | 2 for $5.0 |
+| Bread  | $2.17      | 3 for $6.0 |
+| Banana | $0.99      |            |
+| Apple  | $0.89      |            |
++--------+------------+------------+
+```
+
+### Start a new order
 
 ```
   price_calculator order --inventory_file_path=./data/inventory.json
@@ -55,8 +91,9 @@ To load inventory you can provide the file path through an environment variable 
 
 ## TODO MVP
 - [X] Use/enforce BigDecimal for prices
-- [ ] Add command to CLI that shows the current pricing table based on inventory
+- [X] Add command to CLI that shows the current pricing table based on inventory
 - [X] Enforcing type checking using dry-types. Impact> [POROs vs dry-type + dry-struct comparison](profiling/poros-vs-dry-type-structs.md.md)
+- [ ] Revisit naming
 - [ ] Improve coverage
 - [ ] Improve documentation
 - [ ] Validate attributes/data from inventory JSON file
