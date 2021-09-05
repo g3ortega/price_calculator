@@ -11,9 +11,23 @@ module PriceCalculator
       @invalid_items = []
     end
 
-    def print_price_table
+    def call
       create_order_items
+      # Thinking ahead, here we might have the order processing in a transactional way,
+      # for now we only care of order_items building based on requirements
+      # process_order
+    end
 
+    def total_to_pay
+      calculate_total(:total_to_pay)
+    end
+
+    def total_discount
+      calculate_total(:discount)
+    end
+
+    def to_s
+      output = ''
       table = Text::Table.new
       table.head = %w[Item Quantity Price]
 
@@ -21,10 +35,11 @@ module PriceCalculator
         table.rows << [order_item.product.name, order_item.quantity, "$#{order_item.total_to_pay.to_f}"]
       end
 
-      puts table.to_s
-      puts "Total price: $#{@order_items.map(&:total_to_pay).inject(0, &:+).round(2).to_f}"
-      puts "You saved: $#{@order_items.map(&:discount).inject(0, &:+).round(2).to_f} today"
-      puts "Some items are not available at this moment: #{@invalid_items}" if @invalid_items.any?
+      output << table.to_s
+      output << "Total price: $#{format_total(total_to_pay)}\n"
+      output << "You saved: $#{format_total(total_discount)} today\n" unless total_discount.zero?
+      output << "Some items are not available at this moment: #{@invalid_items}\n" if @invalid_items.any?
+      output
     end
 
     private
@@ -39,6 +54,14 @@ module PriceCalculator
           @invalid_items << product_name
         end
       end
+    end
+
+    def format_total(input)
+      input.to_s('F')
+    end
+
+    def calculate_total(attribute)
+      @order_items.map { |order_item| order_item.send(attribute) }.inject(BigDecimal(0), &:+).round(2)
     end
 
     def product_list_to_hash

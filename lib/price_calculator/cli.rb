@@ -1,7 +1,7 @@
 require 'thor'
 require 'json'
 require 'price_calculator/order_processor'
-require 'price_calculator/services/build_inventory'
+require 'price_calculator/services/load_inventory'
 require 'price_calculator/services/build_product_list'
 
 module PriceCalculator
@@ -17,35 +17,17 @@ module PriceCalculator
 
     def order
       inventory_file_path = ENV['INVENTORY_FILE_PATH'] || options[:inventory_file_path]
-
-      return unless valid_file_path?(inventory_file_path)
+      inventory = Services::LoadInventory.new(inventory_file_path).call
 
       products = ask('Please enter all the items purchased separated by a comma:')
 
-      inventory = Services::BuildInventory.new(inventory_file_path).call
       product_list = Services::BuildProductList.new(products).call
 
-      OrderProcessor.new(inventory: inventory, product_list: product_list).print_price_table
+      order_processor = OrderProcessor.new(inventory: inventory, product_list: product_list)
+      order_processor.call
+      puts order_processor.to_s
     rescue PriceCalculator::Error => e
       say "Error: #{e}"
-    end
-
-    private
-
-    def valid_file_path?(inventory_file_path)
-      # Validates presence
-      if inventory_file_path.nil?
-        say 'Error: You need to provide an INVENTORY file'
-        return false
-      end
-
-      # Validates existence
-      unless File.exist?(inventory_file_path)
-        say 'Error: Invalid path'
-        false
-      end
-
-      true
     end
   end
 end

@@ -14,24 +14,24 @@ RSpec.describe PriceCalculator::OrderProcessor do
       $stdout = @old_stdout
     end
 
-    let(:inventory) { PriceCalculator::Services::BuildInventory.new('spec/data/valid_inventory_file.json').call }
+    let(:inventory) { PriceCalculator::Services::LoadInventory.new('spec/data/valid_inventory_file.json').call }
 
     context 'with all products available in inventory' do
-      let(:product_list) { PriceCalculator::Services::BuildProductList.new('milk,bread,bread').call }
+      let(:product_list) { PriceCalculator::Services::BuildProductList.new('milk,milk,bread,bread').call }
       subject { described_class.new(inventory: inventory, product_list: product_list) }
 
       it 'returns a print table' do
-        subject.print_price_table
+        subject.call
 
-        expect($stdout.string).to eq <<~PRICINGTABLE
+        expect(subject.to_s).to eq <<~PRICINGTABLE
           +-------+----------+-------+
           | Item  | Quantity | Price |
           +-------+----------+-------+
-          | Milk  | 1        | $3.97 |
+          | Milk  | 2        | $5.0  |
           | Bread | 2        | $4.34 |
           +-------+----------+-------+
-          Total price: $8.31
-          You saved: $0.0 today
+          Total price: $9.34
+          You saved: $2.94 today
         PRICINGTABLE
       end
     end
@@ -41,9 +41,9 @@ RSpec.describe PriceCalculator::OrderProcessor do
       subject { described_class.new(inventory: inventory, product_list: product_list) }
 
       it 'returns a print table' do
-        subject.print_price_table
+        subject.call
 
-        expect($stdout.string).to eq <<~PRICINGTABLE
+        expect(subject.to_s).to eq <<~PRICINGTABLE
           +-------+----------+-------+
           | Item  | Quantity | Price |
           +-------+----------+-------+
@@ -51,7 +51,6 @@ RSpec.describe PriceCalculator::OrderProcessor do
           | Bread | 2        | $4.34 |
           +-------+----------+-------+
           Total price: $8.31
-          You saved: $0.0 today
           Some items are not available at this moment: ["nope", "etc"]
         PRICINGTABLE
       end
