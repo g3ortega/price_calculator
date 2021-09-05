@@ -1,0 +1,11 @@
+AllCops:
+  TargetRubyVersion: 2.4
+
+Metrics/BlockLength:
+  Max: 36
+  Exclude:
+    - spec/**/*.rb
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 10
