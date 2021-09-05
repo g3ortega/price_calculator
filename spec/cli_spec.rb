@@ -75,4 +75,27 @@ RSpec.describe PriceCalculator::CLI do
       end
     end
   end
+
+  describe '#pricing_table' do
+    before do
+      @shell.options = { inventory_file_path: 'spec/data/valid_inventory_file.json' }
+    end
+
+
+    it 'renders order pricing for all order items' do
+      @shell.pricing_table
+
+      expect($stdout.string).to eq <<~PRICINGTABLE
+      +--------+------------+------------+
+      |  Item  | Unit Price | Sale Price |
+      +--------+------------+------------+
+      | Milk   | $3.97      | 2 for $5.0 |
+      | Bread  | $2.17      | 3 for $6.0 |
+      | Banana | $0.99      |            |
+      | Apple  | $0.89      |            |
+      +--------+------------+------------+
+      PRICINGTABLE
+    end
+  end
 end
+

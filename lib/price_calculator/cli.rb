@@ -29,5 +29,21 @@ module PriceCalculator
     rescue PriceCalculator::Error => e
       say "Error: #{e}"
     end
+
+    desc 'pricing_table', 'Print pricing table from inventory_file'
+    long_desc <<-ORDER
+    `order PRODUCTS` will calculate the price for a list of comma separated products.
+    You can also pass the an `inventory_path` which consists of a JSON file with the
+    products and discounts.
+    ORDER
+
+    option :inventory_file_path
+
+    def pricing_table
+      inventory_file_path = ENV['INVENTORY_FILE_PATH'] || options[:inventory_file_path]
+      puts Services::LoadInventory.new(inventory_file_path).to_s
+    rescue PriceCalculator::Error => e
+      say "Error: #{e}"
+    end
   end
 end
