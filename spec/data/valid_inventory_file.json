@@ -1,26 +1,26 @@
 [
   {
     "name": "Milk",
-    "unit_price": 3.97,
+    "unit_price": "3.97",
     "discount": {
-      "quantity": 2,
-      "price": 5.0
+      "quantity": "2",
+      "price": "5.0"
     }
   },
   {
     "name": "Bread",
-    "unit_price": 2.17,
+    "unit_price": "2.17",
     "discount": {
-      "quantity": 3,
-      "price": 6.0
+      "quantity": "3",
+      "price": "6.0"
     }
   },
   {
     "name": "Banana",
-    "unit_price": 0.99
+    "unit_price": "0.99"
   },
   {
     "name": "Apple",
-    "unit_price": 0.89
+    "unit_price": "0.89"
   }
 ]

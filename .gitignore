@@ -6,6 +6,11 @@
 /pkg/
 /spec/reports/
 /tmp/
+.vscode
+.idea
+.vim
+*.swp
+*.swo
 
 # rspec failure tracking
 .rspec_status

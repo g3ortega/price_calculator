@@ -37,6 +37,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'text-table'
   spec.add_dependency 'thor'
+  spec.add_dependency 'dry-types'
+  spec.add_dependency 'dry-struct'
 
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
