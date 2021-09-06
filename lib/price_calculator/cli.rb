@@ -1,5 +1,4 @@
 require 'thor'
-require 'json'
 require 'price_calculator/services/order_processor'
 require 'price_calculator/services/load_inventory'
 require 'price_calculator/services/input_processor'
