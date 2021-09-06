@@ -1,4 +1,4 @@
-[![Build Status](https://app.travis-ci.com/g3ortega/foursquare_next.svg?branch=main)](https://app.travis-ci.com/g3ortega/foursquare_next)
+[![Build Status](https://app.travis-ci.com/g3ortega/price_calculator.svg?branch=main)](https://app.travis-ci.com/g3ortega/price_calculator)
 
 # PriceCalculator
 
