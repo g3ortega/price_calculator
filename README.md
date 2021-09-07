@@ -56,7 +56,7 @@ You need to provide an `inventory_file_path`, you can provide it using the flag 
 To run it without install it. From project root path execute:
 
 ```
-  bundle exec exe/price_calculator order --inventory_file_path=./data/inventory.json
+bundle exec exe/price_calculator order --inventory_file_path=./data/inventory.json
 ```
 
 ### Print current inventory
@@ -77,16 +77,16 @@ price_calculator pricing_table --inventory_file_path=./data/inventory.json
 ### Start a new order
 
 ```
-  price_calculator order --inventory_file_path=./data/inventory.json
+price_calculator order --inventory_file_path=./data/inventory.json
 
-  Please enter all the items purchased separated by a comma: milk,milk,milk
-  +------+----------+-------+
-  | Item | Quantity | Price |
-  +------+----------+-------+
-  | Milk | 3        | $8.97 |
-  +------+----------+-------+
-  Total price: $8.97
-  You saved: $2.94 today
+Please enter all the items purchased separated by a comma: milk,milk,milk
++------+----------+-------+
+| Item | Quantity | Price |
++------+----------+-------+
+| Milk | 3        | $8.97 |
++------+----------+-------+
+Total price: $8.97
+You saved: $2.94 today
 ```
 
 ## TODO MVP
