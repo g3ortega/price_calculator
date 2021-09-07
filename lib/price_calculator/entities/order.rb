@@ -45,7 +45,7 @@ module PriceCalculator
       private
 
       def sum_collection_by(attribute)
-        @order_items.collect.collect(&attribute).inject(BigDecimal(0, 8), &:+).round(2)
+        @order_items.collect(&attribute).inject(BigDecimal(0, 8), &:+).round(2)
       end
 
       def clear_cache
