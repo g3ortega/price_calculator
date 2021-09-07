@@ -1,4 +1,8 @@
-[![Build Status](https://app.travis-ci.com/g3ortega/price_calculator.svg?branch=main)](https://app.travis-ci.com/g3ortega/price_calculator)
+[![Build Status](https://app.travis-ci.com/g3ortega/price_calculator.svg?branch=main)][travis]
+[![Coverage Status](https://img.shields.io/coveralls/g3ortega/price_calculator.svg)][coveralls]
+
+[travis]: https://app.travis-ci.com/g3ortega/price_calculator
+[coveralls]: https://coveralls.io/r/g3ortega/price_calculator
 
 # PriceCalculator
 

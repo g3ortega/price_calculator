@@ -61,6 +61,25 @@ RSpec.describe PriceCalculator::CLI do
           Some items are not available at this moment: ["nope", "etc"]
         ORDERPRICING
       end
+
+      it 'renders order pricing without discounted items' do
+        expect(Thor::LineEditor).to receive(:readline)
+          .with('Please enter all the items purchased separated by a comma: ', {})
+          .and_return('bread,bread,milk,apple')
+
+        @shell.order
+
+        expect($stdout.string).to eq <<~ORDERPRICING
+          +-------+----------+-------+
+          | Item  | Quantity | Price |
+          +-------+----------+-------+
+          | Bread | 2        | $4.34 |
+          | Milk  | 1        | $3.97 |
+          | Apple | 1        | $0.89 |
+          +-------+----------+-------+
+          Total price: $9.2
+        ORDERPRICING
+      end
     end
 
     context 'wrong input' do
@@ -98,4 +117,3 @@ RSpec.describe PriceCalculator::CLI do
     end
   end
 end
-

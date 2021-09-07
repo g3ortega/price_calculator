@@ -35,12 +35,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'text-table'
-  spec.add_dependency 'thor'
-  spec.add_dependency 'dry-types'
-  spec.add_dependency 'dry-struct'
+  spec.add_dependency 'text-table', '~> 1.2.4'
+  spec.add_dependency 'thor', '~> 1.1'
+  spec.add_dependency 'dry-types', '~> 1.5'
+  spec.add_dependency 'dry-struct', '~> 1.4'
 
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'pry'
 end
