@@ -98,7 +98,7 @@ You saved: $2.94 today
 - [X] Add command to CLI that shows the current pricing table based on inventory
 - [X] Enforcing type checking using dry-types. Impact> [POROs vs dry-type + dry-struct comparison](profiling/poros-vs-dry-type-structs.md)
 - [X] Revisit naming (refactoring to make more sense to classes responsibility & structure)
-- [ ] Improve coverage
+- [X] Improve coverage
 - [ ] Improve documentation
 - [ ] Add utility module and extract some methods
 - [ ] Validate attributes/data from inventory JSON file
