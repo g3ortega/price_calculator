@@ -96,24 +96,47 @@ RSpec.describe PriceCalculator::CLI do
   end
 
   describe '#pricing_table' do
-    before do
-      @shell.options = { inventory_file_path: 'spec/data/valid_inventory_file.json' }
+    context 'right input' do
+      before do
+        @shell.options = { inventory_file_path: 'spec/data/valid_inventory_file.json' }
+      end
+
+      it 'renders order pricing for all order items' do
+        @shell.pricing_table
+
+        expect($stdout.string).to eq <<~PRICINGTABLE
+        +--------+------------+------------+
+        |  Item  | Unit Price | Sale Price |
+        +--------+------------+------------+
+        | Milk   | $3.97      | 2 for $5.0 |
+        | Bread  | $2.17      | 3 for $6.0 |
+        | Banana | $0.99      |            |
+        | Apple  | $0.89      |            |
+        +--------+------------+------------+
+        PRICINGTABLE
+      end
     end
 
+    context 'wrong/empty inventory_file_path' do
+      it 'print an error when no inventory_file_path is provided' do
+        @shell.pricing_table
 
-    it 'renders order pricing for all order items' do
-      @shell.pricing_table
+        expect($stdout.string).to eq("Error: You need to provide an INVENTORY file\n")
+      end
 
-      expect($stdout.string).to eq <<~PRICINGTABLE
-      +--------+------------+------------+
-      |  Item  | Unit Price | Sale Price |
-      +--------+------------+------------+
-      | Milk   | $3.97      | 2 for $5.0 |
-      | Bread  | $2.17      | 3 for $6.0 |
-      | Banana | $0.99      |            |
-      | Apple  | $0.89      |            |
-      +--------+------------+------------+
-      PRICINGTABLE
+      it 'print an error when no inventory_file_path does not exist' do
+        @shell.options = { inventory_file_path: 'spec/data/random_unexistent_path_to_file.json' }
+        @shell.pricing_table
+
+        expect($stdout.string).to eq("Error: Invalid path\n")
+      end
+
+      it 'print an error when file provided is empty or invalid' do
+        @shell.options = { inventory_file_path: 'spec/data/empty_inventory_file.json' }
+        @shell.pricing_table
+
+        expect($stdout.string).to eq("Error: Inventory parsing failed. Please try with another inventory file.\n")
+      end
     end
   end
 end
