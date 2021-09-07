@@ -1,16 +1,13 @@
 require 'bundler/setup'
-require 'price_calculator'
-require 'bigdecimal'
-require 'pry'
 require 'simplecov'
 require 'coveralls'
 
 SimpleCov.formatters = [SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter]
+SimpleCov.start
 
-SimpleCov.start do
-  add_filter '/spec'
-  minimum_coverage(99)
-end
+require 'price_calculator'
+require 'bigdecimal'
+require 'pry'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
